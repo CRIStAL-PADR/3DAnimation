@@ -7,7 +7,7 @@
 using namespace std;
 
 int main(){
-    Matrice m1{4,4};
+    Matrice m1{3,3};
     m1(0, 0) = 1;
     m1(0, 1) = 2;
     m1(0, 2) = 3;
@@ -17,7 +17,9 @@ int main(){
     m1(2, 0) = 7;
     m1(2, 1) = 8;
     m1(2, 2) = 9;
-    Vect3D vect(1, 3, 1);
+    
+    
+    Vect3D vect(3, 1 , 1);
     Vect3D  multiplication { vect * m1 };
     cout << "Le produit de " << endl;
     cout << vect << endl;
