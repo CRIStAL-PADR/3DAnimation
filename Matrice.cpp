@@ -9,9 +9,15 @@ using namespace std;
 Matrice::Matrice(size_t ligne, size_t colonne, double valeur):m_ligne(ligne), 
 m_colonne(colonne), m_matrice(ligne * colonne, valeur)
 {
-    if (m_colonne != m_ligne){
-        perror("La matrice doit être une matrice carré\n");
-        exit(-1);
+    try
+    {
+        if(m_colonne != m_ligne)
+            throw  string("La matrice doit être une matrice carré\n");
+
+    }
+    catch(string const& chaine)
+    {
+        cerr << chaine << endl;
     }
 }
 
@@ -80,29 +86,40 @@ Vect3D  Matrice::getColonne(Matrice const& matrice, size_t indice) const
 
 Vect3D operator*(Vect3D const & vect, Matrice const & mat) 
 {
-    // Le produit vect * mat va retourner un vect
-    try
-    {
-        if(vect.nb_colonnes() != mat.nb_lignes())
-            throw  string(" le nombre de ligne du vect est different du nombre de ligne de la matrice");
-
-    }
-    catch(string const& chaine)
-    {
-        cerr << chaine << endl;
-    }
-
-            
-    Vect3D copie(vect.nb_lignes(), mat.nb_colonnes(), 0);
-    for (size_t i { 0 }; i < copie.nb_lignes(); i++)
-    {
-        for (size_t j { 0 }; j < copie.nb_colonnes(); j++)
+  
+    if(vect.nb_colonnes() == mat.nb_lignes())
+    {   // Produit vect ligne par mat donne  un vect ligne
+        Vect3D copie(vect.nb_lignes(), mat.nb_colonnes(), 0);
+        for (size_t i { 0 }; i < copie.nb_lignes(); i++)
         {
-            for (size_t k { 0 }; k < vect.nb_colonnes(); k++)
+            for (size_t j { 0 }; j < copie.nb_colonnes(); j++)
             {
-                copie(i, j) = copie(i,j) + vect(i, k) * mat(k, j);
+                for (size_t k { 0 }; k < vect.nb_colonnes(); k++)
+                {
+                    copie(i, j) = copie(i,j) + vect(i, k) * mat(k, j);
+                }
             }
         }
+        return copie;
     }
-    return copie;
+    else if(vect.nb_lignes() == mat.nb_colonnes())
+    {   // Produit d'une mat par un vect colonne donne  un vect colonne
+        Vect3D copie(mat.nb_lignes(), vect.nb_colonnes(), 0);
+        for (size_t i { 0 }; i < copie.nb_lignes(); i++)
+        {
+            for (size_t j { 0 }; j < copie.nb_colonnes(); j++)
+            {
+                for (size_t k { 0 }; k < mat.nb_colonnes(); k++)
+                {
+                    copie(i, j) = copie(i,j) + mat(i, k) * vect(k, j);
+                }
+            }
+        }
+        return copie;
+    }
+    else{
+        throw("Impossible de faire ce produit matricielle");
+        exit(0);
+    }
+    
 }
