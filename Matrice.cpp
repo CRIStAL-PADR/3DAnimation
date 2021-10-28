@@ -18,6 +18,7 @@ m_colonne(colonne), m_matrice(ligne * colonne, valeur)
     catch(string const& chaine)
     {
         cerr << chaine << endl;
+        exit(0);
     }
 }
 
