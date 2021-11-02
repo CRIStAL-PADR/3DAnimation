@@ -5,6 +5,7 @@
 #include "Vect3D.hpp"
 
 using namespace std;
+using namespace linalg;
 
 Matrice::Matrice(double valeur):m_ligne(3), m_colonne(3), m_matrice( m_ligne * m_colonne , valeur)
 {
@@ -47,7 +48,9 @@ std::ostream& operator<<(std::ostream & flux, Matrice  const & matrice){
     return flux;
 }
 
-
+/*Vect3D operator*(Matrice const& mat, Vect3D const& vect){
+    
+}*/
 
 Vect3D operator*(Vect3D const & vect, Matrice const & mat) 
 {

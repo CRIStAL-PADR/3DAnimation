@@ -7,6 +7,7 @@
 #include "Vect3D.hpp"
 #include <algorithm>
 
+
 class Matrice
 {
     public:
@@ -26,7 +27,7 @@ class Matrice
 
 };
 
-Vect3D operator*(Vect3D const & vect, Matrice const & mat);
+linalg::Vect3D operator*(linalg::Vect3D const & vect, Matrice const & mat);
 
 std::ostream& operator<<(std::ostream & flux, Matrice const& matrice);
 
